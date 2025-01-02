@@ -1,0 +1,25 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    min-height: 100svh;
+    font-family: var(--font-inter);
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    padding: 64px;
+    gap: 12px;
+}
+
+.logo {
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 2px;
+}
+
+.page code {
+    font-family: var(--font-mono);
+}
