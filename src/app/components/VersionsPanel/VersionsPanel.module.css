@@ -1,0 +1,43 @@
+.versionsPanel {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: var(--font-mono);
+}
+
+.versionCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 4px;
+    width: 96px;
+    padding: 8px;
+    background-color: var(--version-card-background-color);
+    border-radius: 2px;
+    cursor: pointer;
+    white-space: nowrap;
+
+    --version-card-background-color: var(--green-light);
+    --version-card-text-color: var(--label-dark);
+}
+
+.versionCard.active {
+    --version-card-background-color: var(--green-medium);
+    --version-card-text-color: var(--label-light);
+}
+
+.badge {
+    min-width: 24px;
+    padding: 2px 4px;
+    background-color: var(--green-dark);
+    color: var(--label-light);
+    border-radius: 2px;
+    font-size: 11px;
+    text-align: center;
+}
+
+.date {
+    color: var(--version-card-text-color);
+    font-size: 11px;
+}
