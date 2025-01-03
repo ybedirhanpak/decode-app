@@ -1,0 +1,15 @@
+.codePreview .sandpack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    --sp-layout-height: 400px;
+}
+
+.codePreview .sandpackLayout {
+    border: 1px solid #465256;
+}
+
+.codePreview .saveButton {
+    align-self: flex-end;
+}

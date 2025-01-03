@@ -19,6 +19,7 @@ const eslintConfig = [
             "react/jsx-indent": ["error", 4],
             "react/jsx-indent-props": ["error", 4],
             "eol-last": ["error", "always"],
+            "semi": ["error", "always"],
         }
     }
 ];

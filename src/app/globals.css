@@ -1,14 +1,31 @@
 :root {
     /* Light mode colors */
     --background-primary: rgb(255, 255, 255);
+
     --label-primary: rgb(23, 23, 23);
+    --label-primary-inverse: rgb(255, 255, 255);
+
+    --control-default: #465256;
+    --control-default-pressed: #3f494d;
+
+    --label-dark: #171717;
+    --label-light: #ffffff;
+
+    --green-light: #eff3ea;
+    --green-medium: #66785f;
+    --green-dark: #4b5945;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         /* Dark mode colors */
         --background-primary: rgb(23, 23, 23);
+
         --label-primary: rgb(255, 255, 255);
+        --label-primary-inverse: rgb(23, 23, 23);
+
+        --control-default: #65808d;
+        --control-default-pressed: #7a9aaa;
     }
 }
 
