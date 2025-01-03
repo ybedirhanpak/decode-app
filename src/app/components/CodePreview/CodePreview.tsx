@@ -3,11 +3,13 @@
 import {
     SandpackProvider,
     SandpackLayout,
-    SandpackFileExplorer,
     SandpackCodeEditor,
     SandpackPreview,
     SandpackFiles,
 } from "@codesandbox/sandpack-react";
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore - This package don't have any type definitions
+import { SandpackFileExplorer } from "sandpack-file-explorer";
 import CodeSaveButton from "../CodeSaveButton";
 
 import styles from "./CodePreview.module.css";
@@ -25,7 +27,7 @@ export default function CodePreview({ files, onSave }: Props) {
                     <SandpackLayout className={styles.sandpackLayout}>
                         <SandpackFileExplorer />
                         <SandpackCodeEditor closableTabs showTabs />
-                        <SandpackPreview />
+                        <SandpackPreview/>
                     </SandpackLayout>
                     <CodeSaveButton
                         className={styles.saveButton}
