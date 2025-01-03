@@ -1,5 +1,6 @@
-import styles from "./page.module.css";
 import CodePreview from "./components/CodePreview";
+
+import styles from "./page.module.css";
 
 export default function Home() {
     return (
