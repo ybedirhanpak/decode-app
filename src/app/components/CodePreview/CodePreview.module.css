@@ -7,7 +7,7 @@
 }
 
 .codePreview .sandpackLayout {
-    border: 1px solid #465256;
+    border: 1px solid var(--border-default);
 }
 
 .codePreview .saveButton {

@@ -1,12 +1,22 @@
 .projectDetail {
     display: flex;
+    flex-direction: column;
+}
+
+.projectDetail .preview {
+    display: flex;
+    flex-direction: row;
     gap: 24px;
 }
 
-.projectDetail .editor {
+.projectDetail .preview .main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 36px;
     min-width: 0;
+}
+
+.projectDetail .preview .side {
+    width: 96px;
 }

@@ -1,9 +1,8 @@
 "use client";
 
-import classNames from "classnames";
 import { useSandpack, SandpackFiles } from "@codesandbox/sandpack-react";
 
-import styles from "./CodeSaveButton.module.css";
+import Button from "../Button";
 
 interface Props {
     className?: string;
@@ -19,12 +18,12 @@ function CodeSaveButton({ className, onSave }: Props) {
     }
 
     return (
-        <button
-            className={classNames(styles.codeSaveButton, className)}
+        <Button
+            className={className}
             onClick={handleClick}
         >
             Save changes
-        </button>
+        </Button>
     );
 }
 

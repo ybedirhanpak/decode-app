@@ -8,6 +8,8 @@ import VersionsPanel from "@/app/components/VersionsPanel";
 import { ProjectVersion } from "@/app/model/ProjectVersion";
 
 import { exampleFiles } from "./exampleFiles";
+import CodeGenerate from "./CodeGenerate";
+
 import styles from "./ProjectDetail.module.css";
 
 const initialVersion: ProjectVersion = {
@@ -33,6 +35,18 @@ function ProjectDetail() {
         setActiveVersion(newVersion);
     }
 
+    function handleExtendActiveVersion(files: SandpackFiles) {
+        const newVersion: ProjectVersion = {
+            id: crypto.randomUUID(),
+            index: versions.length,
+            files: { ...activeVersion.files, ...files },
+            date: new Date().toISOString(),
+        };
+
+        setVersions(prevVersions => [...prevVersions, newVersion]);
+        setActiveVersion(newVersion);
+    }
+
     function handleVersionClick(version: ProjectVersion) {
         setActiveVersion(version);
     }
@@ -40,23 +54,23 @@ function ProjectDetail() {
     function renderCodePreview() {
         const { files } = activeVersion;
 
-        return (
-            <CodePreview
-                files={files}
-                onSave={handleSaveFiles}
-            />
-        );
+        return <CodePreview files={files} onSave={handleSaveFiles} />;
     }
 
     return (
         <div className={styles.projectDetail}>
-            <div className={styles.editor}>{renderCodePreview()}</div>
-            <div className={styles.versions}>
-                <VersionsPanel
-                    versions={versions}
-                    activeVersion={activeVersion}
-                    onVersionClick={handleVersionClick}
-                />
+            <div className={styles.preview}>
+                <div className={styles.main}>
+                    {renderCodePreview()}
+                    <CodeGenerate onFilesGenerated={handleExtendActiveVersion} />
+                </div>
+                <div className={styles.side}>
+                    <VersionsPanel
+                        versions={versions}
+                        activeVersion={activeVersion}
+                        onVersionClick={handleVersionClick}
+                    />
+                </div>
             </div>
         </div>
     );
