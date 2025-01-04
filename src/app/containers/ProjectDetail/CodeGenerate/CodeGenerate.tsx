@@ -2,7 +2,7 @@ import { SandpackFiles } from "@codesandbox/sandpack-react";
 
 import styles from "./CodeGenerate.module.css";
 import { useState } from "react";
-import { generateCode } from "@/app/api/api";
+import { generateComponentCode } from "@/app/api/api";
 import Button from "@/app/components/Button";
 
 interface Props {
@@ -23,7 +23,7 @@ function CodeGenerate({ onFilesGenerated }: Props) {
         }
 
         setIsGenerating(true);
-        const generatedResult = await generateCode(inputValue);
+        const generatedResult = await generateComponentCode(inputValue);
 
         if (!generatedResult.success) {
             setIsGenerating(false);

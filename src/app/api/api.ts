@@ -8,8 +8,8 @@ type GenerateCodeResponse = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function generateCode(input: string): Promise<GenerateCodeResponse> {
-    const url = `${API_URL}/generate`;
+export async function generateComponentCode(input: string): Promise<GenerateCodeResponse> {
+    const url = `${API_URL}/component`;
 
     return fetch(url, {
         method: "POST",
