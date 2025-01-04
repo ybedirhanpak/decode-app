@@ -24,14 +24,13 @@ export default Button;
 `;
 
 const BUTTON_MODULE_CSS = `.button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    font-family: "Inter", sans-serif;
-    font-size: 12px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 12px;
     gap: 4px;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -142,23 +141,23 @@ export default App;
 
 const APP_MODULE_CSS = `/* App.module.css */
 .app {
-    font-family: Arial, sans-serif;
-    margin: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    padding: 12px;
 }
 
 h2 {
     font-size: 16px;
-    margin-bottom: 8px;
+    margin: 0 0 8px 0;
 }
 
 .row {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     margin-bottom: 20px;
 }
 
 hr {
-    margin: 20px 0;
+    margin: 24px 0;
     border: none;
     border-top: 1px solid #ccc;
 }
