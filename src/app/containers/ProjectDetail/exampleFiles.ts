@@ -115,8 +115,6 @@ function App() {
                 <div className={styles.row}>
                     <Button>Default</Button>
                     <Button disabled>Disabled</Button>
-                    <Button className={styles.hover}>Hover</Button>
-                    <Button className={styles.pressed}>Pressed</Button>
                 </div>
             </section>
             <hr />
@@ -125,8 +123,6 @@ function App() {
                 <div className={styles.row}>
                     <Button variant="secondary">Default</Button>
                     <Button variant="secondary" disabled>Disabled</Button>
-                    <Button variant="secondary" className={styles.hover}>Hover</Button>
-                    <Button variant="secondary" className={styles.pressed}>Pressed</Button>
                 </div>
             </section>
             <hr />
@@ -135,8 +131,6 @@ function App() {
                 <div className={styles.row}>
                     <Button variant="accent">Default</Button>
                     <Button variant="accent" disabled>Disabled</Button>
-                    <Button variant="accent" className={styles.hover}>Hover</Button>
-                    <Button variant="accent" className={styles.pressed}>Pressed</Button>
                 </div>
             </section>
         </div>
@@ -167,14 +161,6 @@ hr {
     margin: 20px 0;
     border: none;
     border-top: 1px solid #ccc;
-}
-
-.hover {
-    background-color: inherit; /* No visual effect; for showcasing state in storybook-like use */
-}
-
-.pressed {
-    background-color: inherit; /* No visual effect; for showcasing state in storybook-like use */
 }
 `;
 
