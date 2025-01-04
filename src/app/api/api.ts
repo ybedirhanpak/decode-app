@@ -6,10 +6,10 @@ type GenerateCodeResponse = {
     };
 };
 
-const BASE_API_URL = "http://localhost:7001/api";
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export async function generateCode(input: string): Promise<GenerateCodeResponse> {
-    const url = `${BASE_API_URL}/generate`;
+    const url = `${API_URL}/generate`;
 
     return fetch(url, {
         method: "POST",
