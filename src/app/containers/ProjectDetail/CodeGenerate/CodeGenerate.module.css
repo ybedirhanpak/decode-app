@@ -21,3 +21,10 @@
     outline: none;
     outline: 1px solid var(--green-dark);
 }
+
+.codeGenerate .chunks {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
