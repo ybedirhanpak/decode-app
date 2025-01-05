@@ -20,8 +20,8 @@ function extractComponentCodeFromMessages(messages: StreamMessage[]): GeneratedC
     );
 
     if (!contentBlockStartMessage) {
-        console.error("Content block start message not found");
-        return null;
+        console.error("Content block start message not found", messages);
+        throw new Error("Content block start message not found");
     }
 
     const index = (contentBlockStartMessage as CodeBlockStartMessage).index;
@@ -41,11 +41,11 @@ function extractComponentCodeFromMessages(messages: StreamMessage[]): GeneratedC
                 (messageWithStopReason as MessageDelta).delta.stop_reason
             }`;
 
-            showToast(toastMessage);
+            console.error("Content block end message not found", messageWithStopReason);
+            throw new Error(toastMessage);
         }
-
-        console.error("Content block end message not found", messageWithStopReason);
-        return null;
+        console.error("Content block end message not found", messages);
+        throw new Error("Content block end message not found");
     }
 
     // Find all delta messages with the same index
@@ -104,15 +104,15 @@ async function generateCode(userPrompt: string, component: ProjectComponent) {
         const { success, messages } = streamResult;
 
         if (!success) {
-            console.error("Code generation failed", messages);
-            return null;
+            console.error("Stream request failed", streamResult);
+            throw new Error("Stream request failed");
         }
 
         const code = extractComponentCodeFromMessages(messages);
 
         if (!code) {
             console.error("Generated code not found");
-            return null;
+            throw new Error("Generated code not found");
         }
 
         code.code_react = removeImportLines(code.code_react);
@@ -131,7 +131,7 @@ async function generateCode(userPrompt: string, component: ProjectComponent) {
 
         return code;
     } catch (error) {
-        showToast("Code generation failed. Please try again.");
+        showToast("Failed to generate code: " + error);
         console.error("Failed to generate code", error);
         return null;
     }
