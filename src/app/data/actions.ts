@@ -5,8 +5,10 @@ import {
     CodeBlockDeltaMessage,
     CodeBlockJSONDelta,
     CodeBlockStartMessage,
+    MessageDelta,
     StreamMessage,
 } from "../model/StreamMessage";
+import { showToast } from "../utils/toast";
 
 function extractComponentCodeFromMessages(
     messages: StreamMessage[]
@@ -33,7 +35,23 @@ function extractComponentCodeFromMessages(
     );
 
     if (!contentBlockEndMessage) {
-        console.error("Content block end message not found");
+        const messageWithStopReason = messages.find(
+            message =>
+                message.type === "message_delta" && message.delta.stop_reason
+        );
+
+        if (messageWithStopReason) {
+            const toastMessage = `Code generation failed. Stop reason: ${
+                (messageWithStopReason as MessageDelta).delta.stop_reason
+            }`;
+
+            showToast(toastMessage);
+        }
+
+        console.error(
+            "Content block end message not found",
+            messageWithStopReason
+        );
         return null;
     }
 
@@ -56,7 +74,6 @@ function extractComponentCodeFromMessages(
 function removeImportLines(code: string) {
     // If no import lines found, return the code as is
     if (!code.includes("import")) {
-        console.log("No import lines found in the code", code);
         return code;
     }
 

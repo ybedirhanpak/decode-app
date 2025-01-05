@@ -6,6 +6,7 @@ import { generateCode } from "@/app/data/actions";
 import styles from "./CodeGenerate.module.css";
 import { ProjectComponent } from "@/app/model/ProjectComponent";
 import { GeneratedComponentCode } from "@/app/model/Code";
+import { showToast } from "@/app/utils/toast";
 
 interface Props {
     activeComponent: ProjectComponent;
@@ -28,17 +29,19 @@ function CodeGenerate({ activeComponent, onCodeGenerated }: Props) {
             return;
         }
 
+        showToast("Generating code...");
         setIsGenerating(true);
         const code = await generateCode(inputValue, activeComponent);
 
         if (!code) {
-            // TODO: Show error message to user
             setIsGenerating(false);
             return;
         }
 
         setIsGenerating(false);
         onCodeGenerated(code, activeComponent);
+
+        showToast("Code generated successfully");
     }
 
     return (
