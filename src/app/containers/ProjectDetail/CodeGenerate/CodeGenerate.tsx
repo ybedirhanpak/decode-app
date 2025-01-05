@@ -40,6 +40,11 @@ function CodeGenerate({ activeComponent, onCodeGenerated }: Props) {
         toastMessageIndex.current = (toastMessageIndex.current + 1) % GENERATING_MESSAGES.length;
     }
 
+    function clearLoadingToast() {
+        window.clearInterval(toastIntervalId.current!);
+        toastMessageIndex.current = 0;
+    }
+
     function handleInput(event: React.ChangeEvent<HTMLTextAreaElement>) {
         setInputValue(event.target.value);
     }
@@ -68,16 +73,14 @@ function CodeGenerate({ activeComponent, onCodeGenerated }: Props) {
 
         if (!code) {
             setIsGenerating(false);
+            clearLoadingToast();
             return;
         }
 
         setIsGenerating(false);
         onCodeGenerated(code, activeComponent);
 
-        // Clear the interval and reset the message index
-        window.clearInterval(toastIntervalId.current);
-        toastMessageIndex.current = 0;
-
+        clearLoadingToast();
         showToast("Code generated successfully");
     }
 

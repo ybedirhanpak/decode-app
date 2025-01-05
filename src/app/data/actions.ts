@@ -98,37 +98,43 @@ async function generateCode(userPrompt: string, component: ProjectComponent) {
     const componentNamePrompt = `component_name: ${component.name}`;
     const input = `${componentNamePrompt}\n${userPrompt}`;
 
-    const streamResult = await generateComponentCodeStream(input);
+    try {
+        const streamResult = await generateComponentCodeStream(input);
 
-    const { success, messages } = streamResult;
+        const { success, messages } = streamResult;
 
-    if (!success) {
-        console.error("Code generation failed", messages);
+        if (!success) {
+            console.error("Code generation failed", messages);
+            return null;
+        }
+
+        const code = extractComponentCodeFromMessages(messages);
+
+        if (!code) {
+            console.error("Generated code not found");
+            return null;
+        }
+
+        code.code_react = removeImportLines(code.code_react);
+        code.code_preview = removeImportLines(code.code_preview);
+
+        // eslint-disable-next-line quotes
+        const importReact = `import React from "react";\n`;
+
+        // Add import line to the react file
+        const importCSS = `import styles from "./${component.name}.module.css";\n`;
+        code.code_react = [importReact, importCSS, code.code_react].join("\n");
+
+        // Add import line to the preview file
+        const importComponent = `import ${component.name} from "../components/${component.name}";\n`;
+        code.code_preview = [importReact, importComponent, code.code_preview].join("\n");
+
+        return code;
+    } catch (error) {
+        showToast("Code generation failed. Please try again.");
+        console.error("Failed to generate code", error);
         return null;
     }
-
-    const code = extractComponentCodeFromMessages(messages);
-
-    if (!code) {
-        console.error("Generated code not found");
-        return null;
-    }
-
-    code.code_react = removeImportLines(code.code_react);
-    code.code_preview = removeImportLines(code.code_preview);
-
-    // eslint-disable-next-line quotes
-    const importReact = `import React from "react";\n`;
-
-    // Add import line to the react file
-    const importCSS = `import styles from "./${component.name}.module.css";\n`;
-    code.code_react = [importReact, importCSS, code.code_react].join("\n");
-
-    // Add import line to the preview file
-    const importComponent = `import ${component.name} from "../components/${component.name}";\n`;
-    code.code_preview = [importReact, importComponent, code.code_preview].join("\n");
-
-    return code;
 }
 
 export { generateCode };
