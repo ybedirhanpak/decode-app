@@ -200,10 +200,7 @@ hr {
 
 function getAppJsPreviewImports(componentNames: string[]) {
     return componentNames
-        .map(
-            componentName =>
-                `import ${componentName}Preview from "./preview/${componentName}Preview";`
-        )
+        .map(componentName => `import ${componentName}Preview from "./preview/${componentName}Preview";`)
         .join("\n");
 }
 
@@ -229,7 +226,7 @@ function getReactJsForNewComponent(componentName: string) {
 function ${componentName}() {
     return (
         <div className="styles.${componentName}">
-            <p>${componentName}</p>
+            <p>${componentName} v0</p>
         </div>
     );    
 }

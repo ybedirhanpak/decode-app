@@ -55,10 +55,7 @@ function CodePreviewContent({ activeComponent, onSave }: Props) {
         const action = isFileExplorerVisible ? "Hide" : "Show";
 
         return (
-            <button
-                className={styles.fileExplorerButton}
-                onClick={handleToggleFileExplorer}
-            >
+            <button className={styles.fileExplorerButton} onClick={handleToggleFileExplorer}>
                 {action} Files
             </button>
         );
@@ -69,10 +66,7 @@ function CodePreviewContent({ activeComponent, onSave }: Props) {
             <SandpackLayout className={styles.layout}>
                 {isFileExplorerVisible && <SandpackFileExplorer />}
                 <SandpackCodeEditor showTabs={false} showRunButton={false} />
-                <SandpackPreview
-                    actionsChildren={renderToggleFileExplorerButton()}
-                    showOpenInCodeSandbox={false}
-                />
+                <SandpackPreview actionsChildren={renderToggleFileExplorerButton()} showOpenInCodeSandbox={false} />
             </SandpackLayout>
             <CodeSaveButton className={styles.saveButton} onSave={onSave} />
         </div>

@@ -54,12 +54,12 @@ a {
     padding: 8px 16px;
     border-radius: 4px;
     font-size: 12px;
-    animation: fadeIn 0.2s ease-out;
+    animation: fadeIn 0.3s ease-out;
     font-family: var(--font-mono);
 }
 
 .toast.hide {
-    animation: fadeOut 0.2s ease-out;
+    animation: fadeOut 0.3s ease-out;
 }
 
 @keyframes fadeIn {

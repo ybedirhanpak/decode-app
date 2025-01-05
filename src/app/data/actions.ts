@@ -10,9 +10,7 @@ import {
 } from "../model/StreamMessage";
 import { showToast } from "../utils/toast";
 
-function extractComponentCodeFromMessages(
-    messages: StreamMessage[]
-): GeneratedComponentCode | null {
+function extractComponentCodeFromMessages(messages: StreamMessage[]): GeneratedComponentCode | null {
     // Find the index of the message where message type is tool_use and tool name is get_component_code
     const contentBlockStartMessage = messages.find(
         message =>
@@ -30,14 +28,12 @@ function extractComponentCodeFromMessages(
 
     // Find the content end message with the same index
     const contentBlockEndMessage = messages.find(
-        message =>
-            message.type === "content_block_stop" && message.index === index
+        message => message.type === "content_block_stop" && message.index === index
     );
 
     if (!contentBlockEndMessage) {
         const messageWithStopReason = messages.find(
-            message =>
-                message.type === "message_delta" && message.delta.stop_reason
+            message => message.type === "message_delta" && message.delta.stop_reason
         );
 
         if (messageWithStopReason) {
@@ -48,10 +44,7 @@ function extractComponentCodeFromMessages(
             showToast(toastMessage);
         }
 
-        console.error(
-            "Content block end message not found",
-            messageWithStopReason
-        );
+        console.error("Content block end message not found", messageWithStopReason);
         return null;
     }
 
@@ -93,9 +86,7 @@ function removeImportLines(code: string) {
     // Remove import lines
     const importRemovedLines = codeLines.slice(importLineIndex + 1);
     // Find the index of the first non-empty line
-    const firstNonEmptyLineIndex = importRemovedLines.findIndex(
-        line => line.trim() !== ""
-    );
+    const firstNonEmptyLineIndex = importRemovedLines.findIndex(line => line.trim() !== "");
     const cleanedLines = importRemovedLines.slice(firstNonEmptyLineIndex);
 
     // Finalize the code
@@ -126,13 +117,16 @@ async function generateCode(userPrompt: string, component: ProjectComponent) {
     code.code_react = removeImportLines(code.code_react);
     code.code_preview = removeImportLines(code.code_preview);
 
+    // eslint-disable-next-line quotes
+    const importReact = `import React from "react";\n`;
+
     // Add import line to the react file
     const importCSS = `import styles from "./${component.name}.module.css";\n`;
-    code.code_react = importCSS + "\n" + code.code_react;
+    code.code_react = [importReact, importCSS, code.code_react].join("\n");
 
     // Add import line to the preview file
     const importComponent = `import ${component.name} from "../components/${component.name}";\n`;
-    code.code_preview = importComponent + "\n" + code.code_preview;
+    code.code_preview = [importReact, importComponent, code.code_preview].join("\n");
 
     return code;
 }
