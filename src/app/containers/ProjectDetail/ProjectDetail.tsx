@@ -110,11 +110,13 @@ function ProjectDetail() {
     ) {
         const jsFilePath = `/components/${component.name}.js`;
         const cssFilePath = `/components/${component.name}.module.css`;
+        const previewFilePath = `/preview/${component.name}Preview.js`;
 
         const updatedFiles: SandpackFiles = {
             ...files,
             [jsFilePath]: code.code_react,
             [cssFilePath]: code.code_css,
+            [previewFilePath]: code.code_preview,
             "/App.js": getAppJs(
                 components.map(c => c.name),
                 component.name

@@ -53,6 +53,39 @@ function extractComponentCodeFromMessages(
     return JSON.parse(data);
 }
 
+function removeImportLines(code: string) {
+    // If no import lines found, return the code as is
+    if (!code.includes("import")) {
+        console.log("No import lines found in the code", code);
+        return code;
+    }
+
+    // Split code into lines
+    const codeLines = code.split("\n");
+
+    // Remove import lines until the first non-import line
+    let importLineIndex = 0;
+    for (let i = 0; i < codeLines.length; i++) {
+        if (codeLines[i].startsWith("import")) {
+            importLineIndex = i;
+        } else {
+            break;
+        }
+    }
+
+    // Remove import lines
+    const importRemovedLines = codeLines.slice(importLineIndex + 1);
+    // Find the index of the first non-empty line
+    const firstNonEmptyLineIndex = importRemovedLines.findIndex(
+        line => line.trim() !== ""
+    );
+    const cleanedLines = importRemovedLines.slice(firstNonEmptyLineIndex);
+
+    // Finalize the code
+    const cleanCode = cleanedLines.join("\n");
+    return cleanCode;
+}
+
 async function generateCode(userPrompt: string, component: ProjectComponent) {
     const componentNamePrompt = `component_name: ${component.name}`;
     const input = `${componentNamePrompt}\n${userPrompt}`;
@@ -66,7 +99,25 @@ async function generateCode(userPrompt: string, component: ProjectComponent) {
         return null;
     }
 
-    return extractComponentCodeFromMessages(messages);
+    const code = extractComponentCodeFromMessages(messages);
+
+    if (!code) {
+        console.error("Generated code not found");
+        return null;
+    }
+
+    code.code_react = removeImportLines(code.code_react);
+    code.code_preview = removeImportLines(code.code_preview);
+
+    // Add import line to the react file
+    const importCSS = `import styles from "./${component.name}.module.css";\n`;
+    code.code_react = importCSS + "\n" + code.code_react;
+
+    // Add import line to the preview file
+    const importComponent = `import ${component.name} from "../components/${component.name}";\n`;
+    code.code_preview = importComponent + "\n" + code.code_preview;
+
+    return code;
 }
 
 export { generateCode };

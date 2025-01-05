@@ -99,7 +99,7 @@ const BUTTON_MODULE_CSS = `.button {
 
 const BUTTON_PREVIEW = `import Button from "../components/Button";
 
-function ButtonPreview() {
+export default function Preview() {
     return (
         <div>
             <div>
@@ -118,8 +118,6 @@ function ButtonPreview() {
         </div>
     );
 }
-
-export default ButtonPreview;
 `;
 
 const APP_JS = `import ButtonPreview from "./preview/ButtonPreview";
