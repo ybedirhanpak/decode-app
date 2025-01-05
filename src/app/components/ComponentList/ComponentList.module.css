@@ -4,18 +4,12 @@
     gap: 12px;
 }
 
-.componentList h3 {
-    font-size: 14px;
-    font-weight: 500px;
-    font-family: var(--font-mono);
-}
-
 .componentList .createInput {
     padding: 12px;
     border: none;
     background-color: transparent;
-    border: 1px solid #465256;
-    border-radius: 4px;
+    border: 1px solid var(--border-default);
+    border-radius: var(--border-radius-default);
     font-family: var(--font-mono);
     font-size: 12px;
 }
@@ -29,9 +23,9 @@
     flex-direction: column;
     position: relative;
     padding: 12px;
-    border-radius: 4px;
-    background-color: #232322;
-    color: #fff;
+    border-radius: var(--border-radius-default);
+    background-color: var(--card-dark);
+    color: var(--label-light);
     font-size: 12px;
     font-family: var(--font-mono);
     cursor: pointer;
@@ -40,5 +34,5 @@
 .componentCard.active {
     background-color: var(--green-light);
     outline: 1px solid var(--green-medium);
-    color: #171717;
+    color: var(--label-dark);
 }

@@ -15,12 +15,6 @@
     gap: 12px;
 }
 
-.logo {
-    background-color: #fff;
-    padding: 8px;
-    border-radius: 2px;
-}
-
 .page code {
     font-family: var(--font-mono);
 }

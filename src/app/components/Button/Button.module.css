@@ -5,7 +5,7 @@
     gap: 4px;
     padding: 8px 16px;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--border-radius-default);
     font-family: var(--font-mono);
     font-size: 12px;
     text-decoration: none;
@@ -14,7 +14,7 @@
 
 .primary {
     background-color: var(--green-medium);
-    color: #fff;
+    color: var(--label-light);
 }
 
 .primary:hover {
@@ -33,7 +33,7 @@
 
 .secondary {
     background-color: var(--green-dark);
-    color: #fff;
+    color: var(--label-light);
 }
 
 .secondary:hover {
@@ -52,7 +52,7 @@
 
 .accent {
     background-color: var(--green-light);
-    color: #171717;
+    color: var(--label-dark);
 }
 
 .accent:hover {

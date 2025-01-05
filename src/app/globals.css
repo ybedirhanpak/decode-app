@@ -1,13 +1,5 @@
 :root {
-    /* Light mode colors */
-    --background-primary: rgb(255, 255, 255);
-
-    --label-primary: rgb(23, 23, 23);
-    --label-primary-inverse: rgb(255, 255, 255);
-
-    --control-default: #465256;
-    --control-default-pressed: #3f494d;
-
+    /* Colors */
     --label-dark: #171717;
     --label-light: #ffffff;
 
@@ -16,19 +8,15 @@
     --green-dark: #4b5945;
 
     --border-default: #465256;
+
+    --card-dark: #232322;
+
+    /* Spacing */
+    --border-radius-default: 4px;
 }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        /* Dark mode colors */
-        --background-primary: rgb(23, 23, 23);
-
-        --label-primary: rgb(255, 255, 255);
-        --label-primary-inverse: rgb(23, 23, 23);
-
-        --control-default: #65808d;
-        --control-default-pressed: #7a9aaa;
-    }
+html {
+    color-scheme: dark;
 }
 
 html,
@@ -54,10 +42,4 @@ body {
 a {
     color: inherit;
     text-decoration: none;
-}
-
-@media (prefers-color-scheme: dark) {
-    html {
-        color-scheme: dark;
-    }
 }

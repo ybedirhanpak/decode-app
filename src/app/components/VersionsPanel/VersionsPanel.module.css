@@ -14,17 +14,17 @@
     width: 96px;
     padding: 8px;
     background-color: var(--version-card-background-color);
-    border-radius: 4px;
+    border-radius: var(--border-radius-default);
     cursor: pointer;
     white-space: nowrap;
 
-    --version-card-background-color: #232322;
-    --version-card-text-color: #fff;
+    --version-card-background-color: var(--card-dark);
+    --version-card-text-color: var(--label-light);
 }
 
 .versionCard.active {
     --version-card-background-color: var(--green-light);
-    --version-card-text-color: #171717;
+    --version-card-text-color: var(--label-dark);
     outline: 1px solid var(--green-medium);
 }
 
@@ -32,7 +32,7 @@
     min-width: 24px;
     padding: 2px 4px;
     background-color: var(--green-dark);
-    color: #ffffff;
+    color: var(--label-light);
     border-radius: 2px;
     font-size: 11px;
     text-align: center;
