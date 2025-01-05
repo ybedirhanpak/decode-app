@@ -17,14 +17,17 @@
     resize: none;
 }
 
+.codeGenerate.generating textarea {
+    color: var(--label-gray);
+}
+
 .codeGenerate textarea:focus {
     outline: none;
     outline: 1px solid var(--green-dark);
 }
 
-.codeGenerate .chunks {
+.codeGenerate .actions {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     gap: 8px;
-    width: 100%;
 }

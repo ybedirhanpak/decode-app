@@ -7,6 +7,7 @@ import styles from "./CodeGenerate.module.css";
 import { ProjectComponent } from "@/app/model/ProjectComponent";
 import { GeneratedComponentCode } from "@/app/model/Code";
 import { showToast } from "@/app/utils/toast";
+import classNames from "classnames";
 
 interface Props {
     activeComponent: ProjectComponent;
@@ -80,12 +81,46 @@ function CodeGenerate({ activeComponent, onCodeGenerated }: Props) {
         showToast("Code generated successfully");
     }
 
+    const examplePrompt =
+        "- Create a button component that can be used in a 2d pixel game." +
+        "\n" +
+        "- It has three variants: primary, secondary and accent. The primary variant has a blue background and white text, while the secondary variant has a white background and blue text. You can define the accent variant." +
+        "\n" +
+        "- The button component should have the following states: hover, pressed and disabled." +
+        "\n" +
+        "- It should use Inter font for text and have a border radius of 4px." +
+        "\n" +
+        "- When the button is clicked, there should be a subtle animation to indicate the click.";
+
+    function handleTryExample() {
+        setInputValue(examplePrompt);
+    }
+
+    // This message should be descriptive enough to guide the user on what to input
+    const placeholderMessage =
+        "Describe the details of your component. What it does, how it works, and how it should be used. etc." +
+        "\n" +
+        "You can also define the variants and states of the component." +
+        "\n\n" +
+        "Here is an example:\n\n" +
+        examplePrompt;
+
     return (
-        <div className={styles.codeGenerate}>
-            <textarea placeholder="Create a new version with AI" onInput={handleInput} />
-            <Button onClick={handleGenerateCode} disabled={isGenerating}>
-                {isGenerating ? "Generating..." : "Generate Code"}
-            </Button>
+        <div className={classNames(styles.codeGenerate, { [styles.generating]: isGenerating })}>
+            <textarea
+                readOnly={isGenerating}
+                placeholder={placeholderMessage}
+                value={inputValue}
+                onInput={handleInput}
+            />
+            <div className={styles.actions}>
+                <Button variant="accent" onClick={handleTryExample} disabled={isGenerating}>
+                    Try the example
+                </Button>
+                <Button onClick={handleGenerateCode} disabled={isGenerating}>
+                    {isGenerating ? "Generating..." : "Generate Code"}
+                </Button>
+            </div>
         </div>
     );
 }
