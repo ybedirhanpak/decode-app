@@ -1,0 +1,44 @@
+.componentList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.componentList h3 {
+    font-size: 14px;
+    font-weight: 500px;
+    font-family: var(--font-mono);
+}
+
+.componentList .createInput {
+    padding: 8px 12px;
+    border: none;
+    background-color: transparent;
+    border: 1px solid #465256;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+}
+
+.componentList .createInput:focus {
+    outline: 1px solid var(--green-medium);
+}
+
+.componentCard {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: 12px;
+    border-radius: 4px;
+    background-color: #232322;
+    color: #fff;
+    font-size: 12px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+}
+
+.componentCard.active {
+    background-color: #d9e0cf;
+    outline: 1px solid var(--green-medium);
+    color: #171717;
+}

@@ -3,10 +3,10 @@ import styles from "./Button.module.css";
 
 interface Props {
     className?: string;
-    variant?: "primary" | "secondary";
+    variant?: "primary" | "secondary" | "accent";
     disabled?: boolean;
     children: React.ReactNode;
-    onClick: () => void;
+    onClick?: () => void;
 }
 
 function Button({

@@ -14,24 +14,25 @@
     width: 96px;
     padding: 8px;
     background-color: var(--version-card-background-color);
-    border-radius: 2px;
+    border-radius: 4px;
     cursor: pointer;
     white-space: nowrap;
 
-    --version-card-background-color: var(--green-light);
-    --version-card-text-color: var(--label-dark);
+    --version-card-background-color: #232322;
+    --version-card-text-color: #fff;
 }
 
 .versionCard.active {
-    --version-card-background-color: var(--green-medium);
-    --version-card-text-color: var(--label-light);
+    --version-card-background-color: var(--green-light);
+    --version-card-text-color: #171717;
+    outline: 1px solid var(--green-medium);
 }
 
 .badge {
     min-width: 24px;
     padding: 2px 4px;
     background-color: var(--green-dark);
-    color: var(--label-light);
+    color: #ffffff;
     border-radius: 2px;
     font-size: 11px;
     text-align: center;
