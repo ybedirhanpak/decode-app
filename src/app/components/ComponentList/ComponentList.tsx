@@ -69,6 +69,7 @@ function ComponentList({
             <Button onClick={handleCreateButtonClick}>
                 Create new component
             </Button>
+            {renderComponentList()}
             {isCreating && (
                 <input
                     className={styles.createInput}
@@ -76,7 +77,6 @@ function ComponentList({
                     onKeyDown={handleKeyDown}
                 />
             )}
-            {renderComponentList()}
         </div>
     );
 }

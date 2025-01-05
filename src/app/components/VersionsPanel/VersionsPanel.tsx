@@ -1,18 +1,18 @@
 import classNames from "classnames";
 
-import { ProjectVersion } from "@/app/model/ProjectVersion";
+import { ProjectComponentVersion } from "@/app/model/ProjectComponent";
 import { formatDate } from "@/app/utils/format";
 
 import styles from "./VersionsPanel.module.css";
 
 interface Props {
-    versions: ProjectVersion[];
-    activeVersion: ProjectVersion;
-    onVersionClick: (version: ProjectVersion) => void;
+    versions: ProjectComponentVersion[];
+    activeVersion: ProjectComponentVersion;
+    onVersionClick: (version: ProjectComponentVersion) => void;
 }
 
 function VersionsPanel({ versions, activeVersion, onVersionClick }: Props) {
-    function renderVersionCard(version: ProjectVersion) {
+    function renderVersionCard(version: ProjectComponentVersion) {
         const isActive = version.id === activeVersion.id;
 
         return (
@@ -29,9 +29,11 @@ function VersionsPanel({ versions, activeVersion, onVersionClick }: Props) {
         );
     }
 
+    const sortedVersions = versions.sort((a, b) => a.index - b.index);
+
     return (
         <div className={styles.versionsPanel}>
-            {versions.map(renderVersionCard)}
+            {sortedVersions.map(renderVersionCard)}
         </div>
     );
 }

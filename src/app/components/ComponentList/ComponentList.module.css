@@ -11,7 +11,7 @@
 }
 
 .componentList .createInput {
-    padding: 8px 12px;
+    padding: 12px;
     border: none;
     background-color: transparent;
     border: 1px solid #465256;
@@ -38,7 +38,7 @@
 }
 
 .componentCard.active {
-    background-color: #d9e0cf;
+    background-color: var(--green-light);
     outline: 1px solid var(--green-medium);
     color: #171717;
 }

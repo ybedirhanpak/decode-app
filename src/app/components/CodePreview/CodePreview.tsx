@@ -41,13 +41,14 @@ function CodePreviewContent({ activeComponent, onSave }: Props) {
     }
 
     useEffect(() => {
-        if (activeComponent) {
+        if (
+            activeComponent &&
+            sandpack.activeFile !== `/components/${activeComponent.name}.js`
+        ) {
             const componentPath = `/components/${activeComponent.name}.js`;
             sandpack.setActiveFile(componentPath);
         }
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [activeComponent]);
+    }, [activeComponent, sandpack]);
 
     function renderToggleFileExplorerButton() {
         const action = isFileExplorerVisible ? "Hide" : "Show";

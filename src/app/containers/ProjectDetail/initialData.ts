@@ -1,6 +1,5 @@
 import { SandpackFiles } from "@codesandbox/sandpack-react";
 
-import { ProjectVersion } from "@/app/model/ProjectVersion";
 import { ProjectComponent } from "@/app/model/ProjectComponent";
 
 import {
@@ -15,11 +14,18 @@ const initialComponents: ProjectComponent[] = [
     {
         id: crypto.randomUUID(),
         name: "Button",
-        code: {
-            code_react: BUTTON_JS,
-            code_css: BUTTON_MODULE_CSS,
-            code_preview: BUTTON_PREVIEW,
-        },
+        versions: [
+            {
+                id: crypto.randomUUID(),
+                index: 0,
+                code: {
+                    code_react: BUTTON_JS,
+                    code_css: BUTTON_MODULE_CSS,
+                    code_preview: BUTTON_PREVIEW,
+                },
+                date: new Date().toISOString(),
+            },
+        ],
     },
 ];
 
@@ -40,29 +46,19 @@ function getInitialFiles() {
 
     initialComponents.forEach(component => {
         files[`/components/${component.name}.js`] = {
-            code: component.code.code_react,
+            code: component.versions[0].code.code_react,
         };
         files[`/components/${component.name}.module.css`] = {
-            code: component.code.code_css,
+            code: component.versions[0].code.code_css,
         };
         files[`/preview/${component.name}Preview.js`] = {
-            code: component.code.code_preview,
+            code: component.versions[0].code.code_preview,
         };
     });
 
     return files;
 }
 
-function getInitialVersions(): ProjectVersion {
-    return {
-        id: crypto.randomUUID(),
-        index: 0,
-        files: getInitialFiles(),
-        date: new Date().toISOString(),
-    };
-}
-
 const initialFiles = getInitialFiles();
-const initialVersion = getInitialVersions();
 
-export { initialComponents, initialFiles, initialVersion };
+export { initialComponents, initialFiles };

@@ -18,11 +18,8 @@ function CodeSaveButton({ className, onSave }: Props) {
     }
 
     return (
-        <Button
-            className={className}
-            onClick={handleClick}
-        >
-            Save changes
+        <Button className={className} onClick={handleClick}>
+            Save component version
         </Button>
     );
 }
