@@ -41,14 +41,15 @@ function CodePreviewContent({ activeComponent, onSave }: Props) {
     }
 
     useEffect(() => {
+        // When active component changes, set the active file to the component file
         if (
+            !isFileExplorerVisible &&
             activeComponent &&
             sandpack.activeFile !== `/components/${activeComponent.name}.js`
         ) {
-            const componentPath = `/components/${activeComponent.name}.js`;
-            sandpack.setActiveFile(componentPath);
+            sandpack.setActiveFile(`/components/${activeComponent?.name}.js`);
         }
-    }, [activeComponent, sandpack]);
+    }, [activeComponent, sandpack, isFileExplorerVisible]);
 
     function renderToggleFileExplorerButton() {
         const action = isFileExplorerVisible ? "Hide" : "Show";

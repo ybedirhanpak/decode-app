@@ -131,7 +131,9 @@ function ProjectDetail() {
 
     function handleComponentClick(component: ProjectComponent) {
         updateAppJsForComponent(component.name);
-        setActiveComponentName(component.name);
+        setTimeout(() => {
+            setActiveComponentName(component.name);
+        });
     }
 
     function handleCreateComponent(componentName: string) {
@@ -178,7 +180,7 @@ function ProjectDetail() {
         setComponents(updatedComponents);
 
         // To make sure that active component code is previewed
-        requestAnimationFrame(() => {
+        setTimeout(() => {
             setActiveComponentName(newComponent.name);
         });
     }
