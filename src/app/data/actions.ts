@@ -1,5 +1,6 @@
 import { generateComponentCodeStream } from "../api";
 import { GeneratedComponentCode } from "../model/Code";
+import { ProjectComponent } from "../model/ProjectComponent";
 import {
     CodeBlockDeltaMessage,
     CodeBlockJSONDelta,
@@ -52,7 +53,10 @@ function extractComponentCodeFromMessages(
     return JSON.parse(data);
 }
 
-async function generateCode(input: string) {
+async function generateCode(userPrompt: string, component: ProjectComponent) {
+    const componentNamePrompt = `component_name: ${component.name}`;
+    const input = `${componentNamePrompt}\n${userPrompt}`;
+
     const streamResult = await generateComponentCodeStream(input);
 
     const { success, messages } = streamResult;

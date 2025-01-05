@@ -1,16 +1,21 @@
 import { useState } from "react";
-import { SandpackFiles } from "@codesandbox/sandpack-react";
 
 import Button from "@/app/components/Button";
 import { generateCode } from "@/app/data/actions";
 
 import styles from "./CodeGenerate.module.css";
+import { ProjectComponent } from "@/app/model/ProjectComponent";
+import { GeneratedComponentCode } from "@/app/model/Code";
 
 interface Props {
-    onFilesGenerated: (files: SandpackFiles) => void;
+    activeComponent: ProjectComponent;
+    onCodeGenerated: (
+        code: GeneratedComponentCode,
+        component: ProjectComponent
+    ) => void;
 }
 
-function CodeGenerate({ onFilesGenerated }: Props) {
+function CodeGenerate({ activeComponent, onCodeGenerated }: Props) {
     const [inputValue, setInputValue] = useState("");
     const [isGenerating, setIsGenerating] = useState(false);
 
@@ -24,7 +29,7 @@ function CodeGenerate({ onFilesGenerated }: Props) {
         }
 
         setIsGenerating(true);
-        const code = await generateCode(inputValue);
+        const code = await generateCode(inputValue, activeComponent);
 
         if (!code) {
             // TODO: Show error message to user
@@ -32,19 +37,8 @@ function CodeGenerate({ onFilesGenerated }: Props) {
             return;
         }
 
-        const { code_react, code_css } = code;
-
-        const files = {
-            "/Button.js": {
-                code: code_react,
-            },
-            "/Button.module.css": {
-                code: code_css,
-            },
-        };
-
         setIsGenerating(false);
-        onFilesGenerated(files);
+        onCodeGenerated(code, activeComponent);
     }
 
     return (

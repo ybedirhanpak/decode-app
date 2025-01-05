@@ -44,7 +44,7 @@ function ProjectDetail() {
 
         const updatedFiles: SandpackFiles = {
             ...files,
-            "App.js": {
+            "/App.js": {
                 code: getAppJs(componentNames, componentName),
             },
         };
@@ -104,8 +104,57 @@ function ProjectDetail() {
         });
     }
 
-    function handleExtendActiveVersion(files: SandpackFiles) {
-        console.log("files generated: ", files);
+    function handleCodeGenerated(
+        code: GeneratedComponentCode,
+        component: ProjectComponent
+    ) {
+        const jsFilePath = `/components/${component.name}.js`;
+        const cssFilePath = `/components/${component.name}.module.css`;
+
+        const updatedFiles: SandpackFiles = {
+            ...files,
+            [jsFilePath]: code.code_react,
+            [cssFilePath]: code.code_css,
+            "/App.js": getAppJs(
+                components.map(c => c.name),
+                component.name
+            ),
+        };
+
+        setFiles(updatedFiles);
+
+        // Update component versions
+        const newIndex = component.versions.length;
+
+        const newVersion: ProjectComponentVersion = {
+            id: crypto.randomUUID(),
+            index: newIndex,
+            date: new Date().toISOString(),
+            code: {
+                ...component.versions[component.versions.length - 1].code,
+                ...code,
+            },
+        };
+
+        const updatedComponent: ProjectComponent = {
+            ...component,
+            versions: [...component.versions, newVersion],
+        };
+
+        const updatedComponents = components.map(c =>
+            c.id === component.id ? updatedComponent : c
+        );
+
+        setComponents(updatedComponents);
+        setActiveComponentVersionIndices({
+            ...activeComponentVersionIndices,
+            [component.name]: newIndex,
+        });
+
+        // To make sure that active component code is previewed
+        setTimeout(() => {
+            setActiveComponentName(component.name);
+        });
     }
 
     function handleVersionClick(version: ProjectComponentVersion) {
@@ -166,10 +215,10 @@ function ProjectDetail() {
 
         const updatedFiles: SandpackFiles = {
             ...files,
-            "/App.js": getAppJs(updatedComponentNames, componentName),
             [jsFilePath]: newComponent.versions[0].code.code_react,
             [cssFilePath]: newComponent.versions[0].code.code_css,
             [previewFilePath]: newComponent.versions[0].code.code_preview,
+            "/App.js": getAppJs(updatedComponentNames, componentName),
         };
 
         setFiles(updatedFiles);
@@ -228,7 +277,10 @@ function ProjectDetail() {
             <div className={styles.leftSidebar}>{renderComponents()}</div>
             <div className={styles.main}>
                 {renderCodePreview()}
-                <CodeGenerate onFilesGenerated={handleExtendActiveVersion} />
+                <CodeGenerate
+                    activeComponent={activeComponent}
+                    onCodeGenerated={handleCodeGenerated}
+                />
             </div>
             <div className={styles.rightSidebar}>{renderVersionsPanel()}</div>
         </div>
