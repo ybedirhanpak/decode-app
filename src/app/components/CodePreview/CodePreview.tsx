@@ -10,8 +10,10 @@ import {
     SandpackFileExplorer,
     useSandpack,
 } from "@codesandbox/sandpack-react";
-import CodeSaveButton from "../CodeSaveButton";
+
 import { ProjectComponent } from "@/app/model/ProjectComponent";
+import Button from "../Button";
+import CodeSaveButton from "../CodeSaveButton";
 
 import styles from "./CodePreview.module.css";
 
@@ -55,9 +57,9 @@ function CodePreviewContent({ activeComponent, onSave }: Props) {
         const action = isFileExplorerVisible ? "Hide" : "Show";
 
         return (
-            <button className={styles.fileExplorerButton} onClick={handleToggleFileExplorer}>
+            <Button variant="accent" onClick={handleToggleFileExplorer}>
                 {action} Files
-            </button>
+            </Button>
         );
     }
 
@@ -66,9 +68,12 @@ function CodePreviewContent({ activeComponent, onSave }: Props) {
             <SandpackLayout className={styles.layout}>
                 {isFileExplorerVisible && <SandpackFileExplorer />}
                 <SandpackCodeEditor showTabs={false} showRunButton={false} />
-                <SandpackPreview actionsChildren={renderToggleFileExplorerButton()} showOpenInCodeSandbox={false} />
+                <SandpackPreview showOpenInCodeSandbox={false} />
             </SandpackLayout>
-            <CodeSaveButton className={styles.saveButton} onSave={onSave} />
+            <div className={styles.footer}>
+                {renderToggleFileExplorerButton()}
+                <CodeSaveButton onSave={onSave} />
+            </div>
         </div>
     );
 }

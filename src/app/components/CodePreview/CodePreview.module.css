@@ -10,21 +10,8 @@
     border: 1px solid var(--border-default);
 }
 
-.codePreview .fileExplorerButton {
-    background-color: var(--sp-colors-surface2);
-    color: var(--sp-colors-clickable);
-    border: 1px solid var(--sp-colors-surface3);
-    border-radius: var(--border-radius-default);
-    padding: 4px 8px;
-    transition: color var(--sp-transitions-default),
-        background var(--sp-transitions-default);
-    cursor: pointer;
-}
-
-.codePreview .fileExplorerButton:hover {
-    color: var(--sp-colors-hover);
-}
-
-.codePreview .saveButton {
+.codePreview .footer {
     align-self: flex-end;
+    display: flex;
+    gap: 8px;
 }
