@@ -9,9 +9,7 @@ type GenerateCodeResponse = {
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-export async function generateComponentCode(
-    input: string
-): Promise<GenerateCodeResponse> {
+export async function generateComponentCode(input: string): Promise<GenerateCodeResponse> {
     const url = `${API_URL}/component`;
 
     return fetch(url, {
@@ -30,11 +28,8 @@ export async function generateComponentCode(
         });
 }
 
-export async function generateComponentCodeStream(
-    input: string,
-    onChunkReceived?: (chunk: string) => void
-) {
-    const url = `${API_URL}/component/stream`;
+export async function generateComponentCodeStream(input: string, onChunkReceived?: (chunk: string) => void) {
+    const url = `${API_URL}/edge/component`;
 
     const response = await fetch(url, {
         method: "POST",
