@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
     SandpackProvider,
     SandpackLayout,
@@ -20,6 +20,8 @@ import styles from "./CodePreview.module.css";
 interface Props {
     files: SandpackFiles;
     activeComponent?: ProjectComponent;
+    showFileExplorer?: boolean;
+    setShowFileExplorer?: (show: boolean) => void;
     onSave?: (files: SandpackFiles) => void;
 }
 
@@ -34,27 +36,22 @@ function CodePreview(props: Props) {
     );
 }
 
-function CodePreviewContent({ activeComponent, onSave }: Props) {
-    const [isFileExplorerVisible, setIsFileExplorerVisible] = useState(false);
+function CodePreviewContent({ activeComponent, showFileExplorer, onSave, setShowFileExplorer }: Props) {
     const { sandpack } = useSandpack();
 
     function handleToggleFileExplorer() {
-        setIsFileExplorerVisible(prev => !prev);
+        setShowFileExplorer?.(!showFileExplorer);
     }
 
     useEffect(() => {
         // When active component changes, set the active file to the component file
-        if (
-            !isFileExplorerVisible &&
-            activeComponent &&
-            sandpack.activeFile !== `/components/${activeComponent.name}.js`
-        ) {
+        if (!showFileExplorer && activeComponent && sandpack.activeFile !== `/components/${activeComponent.name}.js`) {
             sandpack.setActiveFile(`/components/${activeComponent?.name}.js`);
         }
-    }, [activeComponent, sandpack, isFileExplorerVisible]);
+    }, [activeComponent, sandpack, showFileExplorer]);
 
     function renderToggleFileExplorerButton() {
-        const action = isFileExplorerVisible ? "Hide" : "Show";
+        const action = showFileExplorer ? "Hide" : "Show";
 
         return (
             <Button variant="accent" onClick={handleToggleFileExplorer}>
@@ -66,7 +63,7 @@ function CodePreviewContent({ activeComponent, onSave }: Props) {
     return (
         <div className={styles.content}>
             <SandpackLayout className={styles.layout}>
-                {isFileExplorerVisible && <SandpackFileExplorer />}
+                {showFileExplorer && <SandpackFileExplorer />}
                 <SandpackCodeEditor showTabs={false} showRunButton={false} />
                 <SandpackPreview showOpenInCodeSandbox={false} />
             </SandpackLayout>

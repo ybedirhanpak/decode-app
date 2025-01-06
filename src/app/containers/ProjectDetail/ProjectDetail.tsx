@@ -3,10 +3,7 @@
 import { useState } from "react";
 import { SandpackFiles } from "@codesandbox/sandpack-react";
 
-import {
-    ProjectComponent,
-    ProjectComponentVersion,
-} from "@/app/model/ProjectComponent";
+import { ProjectComponent, ProjectComponentVersion } from "@/app/model/ProjectComponent";
 
 import CodePreview from "@/app/components/CodePreview";
 import VersionsPanel from "@/app/components/VersionsPanel";
@@ -16,28 +13,20 @@ import { initialFiles, initialComponents } from "./initialData";
 import CodeGenerate from "./CodeGenerate";
 
 import styles from "./ProjectDetail.module.css";
-import {
-    getAppJs,
-    getCSSForNewComponent,
-    getPreviewJsForNewComponent,
-    getReactJsForNewComponent,
-} from "./files";
+import { getAppJs, getCSSForNewComponent, getPreviewJsForNewComponent, getReactJsForNewComponent } from "./files";
 import { GeneratedComponentCode } from "@/app/model/Code";
 
 function ProjectDetail() {
     const [files, setFiles] = useState(initialFiles);
     const [components, setComponents] = useState(initialComponents);
-    const [activeComponentName, setActiveComponentName] = useState<string>(
-        initialComponents[0].name
-    );
-    const [activeComponentVersionIndices, setActiveComponentVersionIndices] =
-        useState({
-            [initialComponents[0].name]: 0,
-        });
+    const [activeComponentName, setActiveComponentName] = useState<string>(initialComponents[0].name);
+    const [activeComponentVersionIndices, setActiveComponentVersionIndices] = useState({
+        [initialComponents[0].name]: 0,
+    });
 
-    const activeComponent = components.find(
-        component => component.name === activeComponentName
-    )!;
+    const [showFileExplorer, setShowFileExplorer] = useState(false);
+
+    const activeComponent = components.find(component => component.name === activeComponentName)!;
 
     function updateAppJsForComponent(componentName: string) {
         const componentNames = components.map(component => component.name);
@@ -65,10 +54,7 @@ function ProjectDetail() {
         const updatedCode: GeneratedComponentCode = {
             code_react: typeof jsFile === "string" ? jsFile : jsFile.code,
             code_css: typeof cssFile === "string" ? cssFile : cssFile.code,
-            code_preview:
-                typeof previewFile === "string"
-                    ? previewFile
-                    : previewFile.code,
+            code_preview: typeof previewFile === "string" ? previewFile : previewFile.code,
         };
 
         const newIndex = activeComponent.versions.length;
@@ -104,10 +90,7 @@ function ProjectDetail() {
         });
     }
 
-    function handleCodeGenerated(
-        code: GeneratedComponentCode,
-        component: ProjectComponent
-    ) {
+    function handleCodeGenerated(code: GeneratedComponentCode, component: ProjectComponent) {
         const jsFilePath = `/components/${component.name}.js`;
         const cssFilePath = `/components/${component.name}.module.css`;
         const previewFilePath = `/preview/${component.name}Preview.js`;
@@ -143,9 +126,7 @@ function ProjectDetail() {
             versions: [...component.versions, newVersion],
         };
 
-        const updatedComponents = components.map(c =>
-            c.id === component.id ? updatedComponent : c
-        );
+        const updatedComponents = components.map(c => (c.id === component.id ? updatedComponent : c));
 
         setComponents(updatedComponents);
         setActiveComponentVersionIndices({
@@ -157,6 +138,9 @@ function ProjectDetail() {
         setTimeout(() => {
             setActiveComponentName(component.name);
         });
+
+        // To make sure that user sees the generated code
+        setShowFileExplorer(false);
     }
 
     function handleVersionClick(version: ProjectComponentVersion) {
@@ -199,8 +183,7 @@ function ProjectDetail() {
                     code: {
                         code_react: getReactJsForNewComponent(componentName),
                         code_css: getCSSForNewComponent(componentName),
-                        code_preview:
-                            getPreviewJsForNewComponent(componentName),
+                        code_preview: getPreviewJsForNewComponent(componentName),
                     },
                 },
             ],
@@ -211,9 +194,7 @@ function ProjectDetail() {
         const previewFilePath = `/preview/${componentName}Preview.js`;
 
         const updatedComponents = [...components, newComponent];
-        const updatedComponentNames = updatedComponents.map(
-            component => component.name
-        );
+        const updatedComponentNames = updatedComponents.map(component => component.name);
 
         const updatedFiles: SandpackFiles = {
             ...files,
@@ -241,6 +222,8 @@ function ProjectDetail() {
             <CodePreview
                 files={files}
                 activeComponent={activeComponent}
+                showFileExplorer={showFileExplorer}
+                setShowFileExplorer={setShowFileExplorer}
                 onSave={handleSaveChanges}
             />
         );
@@ -261,17 +244,9 @@ function ProjectDetail() {
         const { versions } = activeComponent;
         const activeIndex = activeComponentVersionIndices[activeComponent.name];
 
-        const activeVersion = versions.find(
-            version => version.index === activeIndex
-        )!;
+        const activeVersion = versions.find(version => version.index === activeIndex)!;
 
-        return (
-            <VersionsPanel
-                versions={versions}
-                activeVersion={activeVersion}
-                onVersionClick={handleVersionClick}
-            />
-        );
+        return <VersionsPanel versions={versions} activeVersion={activeVersion} onVersionClick={handleVersionClick} />;
     }
 
     return (
@@ -279,10 +254,7 @@ function ProjectDetail() {
             <div className={styles.leftSidebar}>{renderComponents()}</div>
             <div className={styles.main}>
                 {renderCodePreview()}
-                <CodeGenerate
-                    activeComponent={activeComponent}
-                    onCodeGenerated={handleCodeGenerated}
-                />
+                <CodeGenerate activeComponent={activeComponent} onCodeGenerated={handleCodeGenerated} />
             </div>
             <div className={styles.rightSidebar}>{renderVersionsPanel()}</div>
         </div>
